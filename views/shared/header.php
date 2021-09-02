@@ -23,7 +23,7 @@
                 <a href="views/addAdventure.php" class="btn brand top-nav-button">Add adventure</a>
             </li>
             <li>
-                <a href="views/login.php" class="btn brand top-nav-button">My Profile</a>
+                <a href="views/profile.php" class="btn brand top-nav-button">My Profile</a>
             </li>
         </ul>
     </div>

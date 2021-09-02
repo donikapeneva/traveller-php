@@ -2,19 +2,41 @@
 
 require_once $_SERVER['DOCUMENT_ROOT']."/Travellers/utils/Database.php";
 
+//session_start();
+
 class UserController {
 
-//    public static function getAll() {
-//        $sql = 'SELECT * FROM user
-//                ORDER BY time DESC';
-//
-//        $query = Database::getInstance()->getConnection()
-//            ->prepare($sql);
-//        $query->execute([false]);
-//        $adventures =$query->fetchAll();
-////        echo json_encode($adventures);
-//        return $adventures;
-//    }
+    public static function LoginAuthenticate(){
+        $email = $_REQUEST['email'];
+        $password = $_REQUEST['password'];
+
+        $query = Database::getInstance()->getConnection()->prepare("
+                SELECT email, username, password, id 
+                FROM user 
+                WHERE email = ?");
+        $query->execute([$email]);
+        $data = $query->fetch();
+
+        if (isset($data["email"]) && $data["password"] == $password){
+            $_SESSION["email"] = $data["email"];
+            $_SESSION["userId"] = $data["id"];
+            header("Location: ../index.php");
+            exit;
+        } else {
+            session_unset();
+            session_destroy();
+            header("Location: ../index.php");
+            exit;
+        }
+    }
+
+    public static function LogOut(){
+        session_unset();
+        session_destroy();
+
+        header("Location: ../index.php");
+        exit;
+    }
 
     public static function getOneById($id) {
         $sql = 'SELECT * FROM user 
@@ -39,18 +61,22 @@ class UserController {
     public static function create($data) {
         $username = $data['username'];
         $email = $data['email'];
-        $password = $data['passwd'];
-        $first_name = $data['first_name'];
-        $last_name = $data['last_name'];
-        $is_active = $data['is_active'];
+        $password = $data['password'];
+        $first_name = $data['firstName'];
+        $last_name = $data['lastName'];
 
         $query = Database::getInstance()->getConnection()->prepare("
             INSERT INTO user ( username, email, password, first_name, last_name, is_active)
             VALUES ( ?, ?, ?, ?, ?, ?)
             ");
         $query->execute([$username, $email, $password, $first_name, $last_name, true]);
-
+//        $res = $query->fetch();
+//        echo $res;
+        $_SESSION["email"] = $email;
+        $_SESSION["userId"] = $data["id"];
         header("Location: ../index.php");
+
+//        return $res;
     }
 
     public static function delete($id) {

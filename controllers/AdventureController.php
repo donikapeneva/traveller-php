@@ -1,6 +1,7 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT']."/Travellers/utils/Database.php";
+//session_start();
 
 class AdventureController {
 
@@ -13,7 +14,19 @@ class AdventureController {
             ->prepare($sql);
         $query->execute([false]);
         $adventures =$query->fetchAll();
-//        echo json_encode($adventures);
+        return $adventures;
+    }
+
+    public static function getAllByUserId($id) {
+        $sql = 'SELECT * FROM adventure 
+                WHERE is_deleted = ?
+                AND user_id = ?
+                ORDER BY time DESC';
+
+        $query = Database::getInstance()->getConnection()
+            ->prepare($sql);
+        $query->execute([false, $id]);
+        $adventures =$query->fetchAll();
         return $adventures;
     }
 
@@ -28,9 +41,10 @@ class AdventureController {
 
     public static function create($data) {
 
+
         $name = $data['adventureName'];
         $tip = $data['tips'];
-        $user_id = 1;
+        $user_id = $_SESSION['userId'];
         $city_id = 91;
 
         $query = Database::getInstance()->getConnection()->prepare("

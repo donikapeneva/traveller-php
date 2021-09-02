@@ -1,8 +1,10 @@
 <?php
 
 require ('../controllers/AdventureController.php');
-
+//session_start();
+//echo $_SESSION['email'];
 if(isset($_POST['submit'])) {
+
     AdventureController::create($_POST);
 }
 

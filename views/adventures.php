@@ -3,6 +3,7 @@
 require('controllers/AdventureController.php');
 $adventures = AdventureController::getAll();
 
+session_start();
 ?>
 
 <div class="row">
