@@ -1,8 +1,9 @@
+<?php include('shared/header.php'); ?>
+
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'].'/Travellers/controllers/AdventureController.php';
-//require('controllers/AdventureController.php');
-session_start();
+
 $currentUser = $_SESSION['userId'];
 
 if(isset($_GET['id'])) {
@@ -15,13 +16,12 @@ if(isset($_POST['id'])) {
 
 ?>
 
-<?php include('shared/header.php'); ?>
-
 <?php if($currentUser == $adventure['user_id']) { ?>
 <div class="row ">
     <h4 class="center brand-text "><?php echo($adventure['name'])?></h4>
     <form class="right" action="adventureDetails.php" method="POST">
         <input type="hidden" name="id" value="<?php echo($adventure['id'])?>">
+        
         <input type="submit" name="delete" value="Delete" class="btn">
 
     </form>

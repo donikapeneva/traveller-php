@@ -1,16 +1,32 @@
+<?php include('shared/header.php'); ?>
+
 <?php
 
 require ('../controllers/AdventureController.php');
-//session_start();
-//echo $_SESSION['email'];
-if(isset($_POST['submit'])) {
 
-    AdventureController::create($_POST);
+$error = '';
+
+if(!isset($_SESSION['userId'])) {
+    $error = 'You need to be logged in.';
+}
+
+if(isset($_POST['submit'])) {
+    if(isset($_SESSION['userId'])){
+        AdventureController::create($_POST);
+    } else {
+        $error = 'Please, log in.';
+    }
 }
 
 ?>
 
-<?php include('shared/header.php'); ?>
+
+
+<?php 
+    if($error) {
+        echo '<div class="card-panel red lighten-4">'.$error.'</div>';
+    }
+?>
 
 <section class="container grey-text">
     <h4 class="center brand-text">Add adventure</h4>

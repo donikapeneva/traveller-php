@@ -1,8 +1,11 @@
+<?php include('shared/header.php'); ?>
 <?php
-session_start();
+// session_start();
 
 require $_SERVER['DOCUMENT_ROOT'].'/Travellers/controllers/UserController.php';
 require $_SERVER['DOCUMENT_ROOT'].'/Travellers/controllers/AdventureController.php';
+
+$error = '';
 
 if(isset($_GET['logout'])) {
     UserController::LogOut();
@@ -10,7 +13,7 @@ if(isset($_GET['logout'])) {
 
 if(isset($_POST['login'])) {
     if ($_POST['email']){
-        UserController::LoginAuthenticate();
+        $error = UserController::LoginAuthenticate();
     }
 }
 
@@ -26,13 +29,19 @@ if(isset($_POST['register'])) {
 }
 
 if($_SESSION && $_SESSION['userId']) {
-    echo $_SESSION['userId'];
+    //echo $_SESSION['userId'];
     $user = UserController::getOneById($_SESSION['userId']);
     $adventures = AdventureController::getAllByUserId($_SESSION['userId']);
 }
 ?>
 
-<?php include('shared/header.php'); ?>
+
+
+<?php 
+    if($error) {
+        echo '<div class="card-panel red lighten-4">'.$error.'</div>';
+    }
+?>
 
 <?php if(!$_SESSION || !$_SESSION['userId']) { ?>
 <section class="row grey-text">

@@ -19,9 +19,11 @@
     <div class="container">
         <a href="/Travellers" class="brand-logo brand-text center">Travellers</a>
         <ul class="right hide-on-small-and-down">
-            <li>
-                <a href="views/addAdventure.php" class="btn brand top-nav-button">Add adventure</a>
-            </li>
+            <?php session_start(); if($_SESSION && $_SESSION['userId']) { ?>
+                <li>
+                    <a href="views/addAdventure.php" class="btn brand top-nav-button">Add adventure</a>
+                </li>
+            <?php } ?>
             <li>
                 <a href="views/profile.php" class="btn brand top-nav-button">My Profile</a>
             </li>

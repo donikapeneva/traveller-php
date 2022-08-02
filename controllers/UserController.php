@@ -25,8 +25,7 @@ class UserController {
         } else {
             session_unset();
             session_destroy();
-            header("Location: ../index.php");
-            exit;
+            return 'Invalid email or password.';
         }
     }
 
