@@ -1,0 +1,15 @@
+.select-dropdown {
+    text-align: center;
+}
+
+.dropdown-content li  {
+    text-align: center !important;
+}
+
+.form-button {
+    margin: 25px;
+}
+
+body {
+    background-color: white;
+}

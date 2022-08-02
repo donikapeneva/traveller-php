@@ -1,6 +1,7 @@
+.top-nav-button {
+    background: #DAA520FF;
+}
+
 .brand-text {
     color: goldenrod !important;
-}
-form {
-    max-width: 460px;
 }
